@@ -91,13 +91,34 @@ Que Deus continue falando com você.
 
 
 <script>
-        fetch('https://bible-api.com') // Busca um versículo aleatório
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('carregarVersiculo').innerHTML = 
-                    `<h1>${data.reference}</h1><p>${data.text}</p>`;
-            });
-    </script>
+  // Função assíncrona para carregar o JSON
+  async function carregarDados() {
+    try {
+      // Faz a requisição para o arquivo local
+      const resposta = await fetch('./almeida_ra.json');
+      
+      // Verifica se a resposta é válida
+      if (!resposta.ok) {
+        throw new Error('Erro ao carregar o arquivo JSON');
+      }
+
+      // Converte a resposta para objeto JavaScript
+      const dados = await resposta.json();
+      
+      // Agora você pode usar os dados como quiser
+      console.log('Dados carregados:', dados);
+      
+      // Exemplo: exibir um campo no HTML (supondo que seu JSON tenha um campo "nome")
+      // document.getElementById('resultado').innerText = dados.nome;
+
+    } catch (erro) {
+      console.error('Erro:', erro);
+    }
+  }
+
+  // Chama a função
+  carregarDados();
+</script>
 
 function responder() {
   document.querySelector(".opcoes").style.display = "none";
