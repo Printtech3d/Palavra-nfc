@@ -94,7 +94,7 @@ Que Deus continue falando com você.
         fetch('https://bible-api.com') // Busca um versículo aleatório
             .then(response => response.json())
             .then(data => {
-                document.getElementById('versiculo').innerHTML = 
+                document.getElementById('carregarVersiculo').innerHTML = 
                     `<h1>${data.reference}</h1><p>${data.text}</p>`;
             });
     </script>
