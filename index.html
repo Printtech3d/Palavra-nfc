@@ -91,25 +91,13 @@ Que Deus continue falando com você.
 
 
 <script>
-function carregarVersiculo() {
-  fetch("acf.json?v=" + Date.now())
-    .then(res => res.json())
-    .then(data => {
-      const aleatorio = data[Math.floor(Math.random() * data.length)];
-
-      document.getElementById("texto").innerText = aleatorio.texto;
-      document.getElementById("ref").innerText =
-        `${aleatorio.livro} ${aleatorio.capitulo}:${aleatorio.versiculo}`;
-    })
-    .catch((erro) => {
-      console.log(erro);
-      document.getElementById("texto").innerText =
-        "Erro ao carregar o versículo.";
-    });
-}
-
-carregarVersiculo();
-</script>
+        fetch('https://bible-api.com') // Busca um versículo aleatório
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('versiculo').innerHTML = 
+                    `<h1>${data.reference}</h1><p>${data.text}</p>`;
+            });
+    </script>
 
 function responder() {
   document.querySelector(".opcoes").style.display = "none";
