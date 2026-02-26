@@ -90,12 +90,26 @@ Que Deus continue falando com você.
 </div>
 
 
+
 function carregarVersiculo() {
-  const aleatorio = versiculos[Math.floor(Math.random() * versiculos.length)];
-  document.getElementById("texto").innerText = aleatorio.texto;
-  document.getElementById("ref").innerText = aleatorio.ref;
-  document.getElementById("aplicacao").innerText = "Receba esta Palavra no seu coração.";
+  fetch("acf.json?v=" + Date.now())
+    .then(res => res.json())
+    .then(data => {
+      const aleatorio = data[Math.floor(Math.random() * data.length)];
+
+      document.getElementById("texto").innerText = aleatorio.texto;
+      document.getElementById("ref").innerText =
+        `${aleatorio.livro} ${aleatorio.capitulo}:${aleatorio.versiculo}`;
+    })
+    .catch((erro) => {
+      console.log(erro);
+      document.getElementById("texto").innerText =
+        "Erro ao carregar o versículo.";
+    });
 }
+
+carregarVersiculo();
+</script>
 
 function responder() {
   document.querySelector(".opcoes").style.display = "none";
