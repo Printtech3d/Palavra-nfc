@@ -91,43 +91,41 @@ Que Deus continue falando com você.
 
 
 <script>
-  // Função assíncrona para carregar o JSON
-  async function carregarDados() {
+  async function carregarVersiculo() {
     try {
-      // Faz a requisição para o arquivo local
+      // 1. Busca o arquivo JSON
       const resposta = await fetch('./almeida_ra.json');
+      if (!resposta.ok) throw new Error('Erro ao carregar JSON');
       
-      // Verifica se a resposta é válida
-      if (!resposta.ok) {
-        throw new Error('Erro ao carregar o arquivo JSON');
-      }
-
-      // Converte a resposta para objeto JavaScript
       const dados = await resposta.json();
       
-      // Agora você pode usar os dados como quiser
-      console.log('Dados carregados:', dados);
+      // 2. Lógica para sortear (ajuste 'dados' se seu JSON for um objeto de livros)
+      // Se o seu JSON for uma lista direta:
+      const indice = Math.floor(Math.random() * dados.length);
+      const escolhido = dados[indice];
+
+      // 3. Preenche o HTML (ajuste os nomes .texto e .referencia conforme seu arquivo)
+      document.getElementById('texto').innerText = escolhido.texto;
+      document.getElementById('ref').innerText = escolhido.referencia;
       
-      // Exemplo: exibir um campo no HTML (supondo que seu JSON tenha um campo "nome")
-      // document.getElementById('resultado').innerText = dados.nome;
+      // Aplicação opcional (se não tiver no JSON, pode deixar fixo ou remover)
+      document.getElementById('aplicacao').innerText = "Medite nesta palavra hoje.";
 
     } catch (erro) {
       console.error('Erro:', erro);
+      document.getElementById('texto').innerText = "Não foi possível carregar o versículo.";
     }
   }
 
-  // Chama a função
-  carregarDados();
+  function responder() {
+    document.querySelector(".opcoes").style.display = "none";
+    document.getElementById("msgObrigado").style.display = "block";
+  }
+
+  // Inicializa a função ao carregar a página
+  carregarVersiculo();
 </script>
 
-function responder() {
-  document.querySelector(".opcoes").style.display = "none";
-  document.getElementById("msgObrigado").style.display = "block";
-}
-
-// Carregar versículo ao abrir
-carregarVersiculo();
-</script>
 
 </body>
 </html>
