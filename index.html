@@ -108,7 +108,12 @@ db.collection("acessos").doc("global").update({
 });
 </script>
 
-  
+  <script>
+db.collection("acessos").doc("global").get().then(doc => {
+  document.getElementById("contador").innerText =
+    "Alcance: " + doc.data().total;
+});
+  </script>
 <script>
   async function carregarVersiculo() {
     try {
