@@ -110,32 +110,18 @@ h1 {
 
 </div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
-
 <script>
-const firebaseConfig = {
-  apiKey: "SUA_API_KEY",
-  authDomain: "SEU_PROJETO.firebaseapp.com",
-  projectId: "SEU_PROJETO",
-};
-
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const docRef = db.collection("acessos").doc("global");
-
-// Incrementa contador
-docRef.update({
-  total: firebase.firestore.FieldValue.increment(1)
-}).then(() => {
-  // Busca valor atualizado
-  docRef.get().then(doc => {
-    document.getElementById("contadorNumero").innerText = doc.data().total;
+/* CONTADOR (CounterAPI) */
+fetch("https://api.counterapi.dev/v1/Printtech3d/Palavra-diaria/up")
+  .then(res => res.json())
+  .then(data => {
+    document.getElementById("contadorNumero").innerText = data.count;
+  })
+  .catch(() => {
+    document.getElementById("contadorNumero").innerText = "—";
   });
-});
 
-// Versículo aleatório
+/* Versículo aleatório */
 async function carregarVersiculo() {
   try {
     const resposta = await fetch('./almeida_ra.json');
@@ -155,13 +141,13 @@ async function carregarVersiculo() {
   }
 }
 
-// Resposta do usuário
+/* Resposta do usuário */
 function responder() {
   document.getElementById("opcoes").style.display = "none";
   document.getElementById("msgObrigado").style.display = "block";
 }
 
-// Eventos dos botões
+/* Eventos dos botões */
 document.querySelectorAll("#opcoes button")
   .forEach(btn => btn.addEventListener("click", responder));
 
